@@ -1,8 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { ConnectionScreen } from "../screens/ConnectionScreen";
 import { HomeScreen } from "../screens/HomeScreen";
+import { Pager } from "../screens/Pager";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { ProjectScreen } from "../screens/ProjectScreen";
+import { SubscriptionScreen } from "../screens/SubscriptionScreen";
 import { stackScreens } from "./navigationType";
 import { TabBarNavigation } from "./TabBarNavigation";
 
@@ -32,24 +35,51 @@ export const SignedInStackScreen = (): JSX.Element => {
   const SignedInTab = createBottomTabNavigator();
   return (
     <>
-        <SignedInTab.Navigator
-          screenOptions={headerStyleHidden}
-          tabBar={(props) => <TabBarNavigation {...props} />}
-          initialRouteName={"HomeStackScreen"}
-        >
-          <SignedInTab.Screen
-            name={stackScreens.ProjectStackScreen}
-            component={ProjectStackScreen}
-          />
-          <SignedInTab.Screen
-            name={stackScreens.HomeStackScreen}
-            component={HomeStackScreen}
-          />
-          <SignedInTab.Screen
-            name={stackScreens.ProfileStackScreen}
-            component={ProfileStackScreen}
-          />
-        </SignedInTab.Navigator>
+      <SignedInTab.Navigator
+        screenOptions={headerStyleHidden}
+        tabBar={(props) => <TabBarNavigation {...props} />}
+        initialRouteName={"HomeStackScreen"}
+      >
+        <SignedInTab.Screen
+          name={stackScreens.ProjectStackScreen}
+          component={ProjectStackScreen}
+        />
+        <SignedInTab.Screen
+          name={stackScreens.HomeStackScreen}
+          component={HomeStackScreen}
+        />
+        <SignedInTab.Screen
+          name={stackScreens.ProfileStackScreen}
+          component={ProfileStackScreen}
+        />
+      </SignedInTab.Navigator>
+    </>
+  );
+};
+
+export const SignedOutStackScreen = (): JSX.Element => {
+  const SignedOut = createStackNavigator();
+  return (
+    <>
+      <SignedOut.Navigator>
+        <SignedOut.Screen name="Pager" component={Pager} />
+        <SignedOut.Screen
+          name="Subscription"
+          component={SubscriptionScreen}
+          options={{
+            ...headerStyleWithTitle,
+            headerTitle: "S'inscrire",
+          }}
+        />
+        <SignedOut.Screen
+          name="Connection"
+          component={ConnectionScreen}
+          options={{
+            ...headerStyleWithTitle,
+            headerTitle: "Connexion",
+          }}
+        />
+      </SignedOut.Navigator>
     </>
   );
 };

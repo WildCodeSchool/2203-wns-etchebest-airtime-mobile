@@ -5,16 +5,16 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { ProtectedRoutesScreen } from "./navigation/ProtectedRouteScreen";
-import { ProjectStackScreen, SignedInStackScreen } from "./navigation/StackScreens";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://192.168.1.21:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("token");
+  const token = AsyncStorage.getItem("token");
   return {
     headers: {
       ...headers,
