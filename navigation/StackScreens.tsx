@@ -66,21 +66,28 @@ export const SignedOutStackScreen = (): JSX.Element => {
   return (
     <>
       <SignedOut.Navigator>
-        <SignedOut.Screen name="Pager" component={Pager} />
+        <SignedOut.Screen
+          name="Pager"
+          component={Pager}
+          options={{
+            ...headerStyleHidden,
+          }}
+        />
         <SignedOut.Screen
           name="Subscription"
           component={SubscriptionScreen}
           options={{
             ...headerStyleWithTitle,
             headerTitle: "S'inscrire",
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "#000" },
           }}
         />
         <SignedOut.Screen
           name="Connection"
           component={ConnectionScreen}
           options={{
-            ...headerStyleWithTitle,
-            headerTitle: "Connexion",
+            ...headerSimpleArrow,
           }}
         />
       </SignedOut.Navigator>
