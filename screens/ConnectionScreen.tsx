@@ -1,15 +1,19 @@
 import { useMutation } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "../components/Button/Button";
+import { AuthContext } from "../context/AuthContext";
 import { LOGIN } from "../graphql/mutations/userMutation";
 import { FocusAwareStatusBar } from "../navigation/FocusStatusBar";
+import { AuthContextType } from "../types/auth";
 
 export const ConnectionScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMutation, setErrorMutation] = useState("");
+
+  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
 
   const [signIn, { data: dataSignIn, error: errorSignIn }] = useMutation(
     LOGIN,
@@ -30,6 +34,8 @@ export const ConnectionScreen = ({ navigation }: any) => {
         try {
           const token = JSON.stringify(value);
           await AsyncStorage.setItem("token", token);
+          setSignedIn(true);
+          navigation.navigate("ProtectedRoutes");
         } catch (e) {
           setErrorMutation("La connexion a échoué");
         }
@@ -59,6 +65,7 @@ export const ConnectionScreen = ({ navigation }: any) => {
           title="Se Connecter"
           variant="primary"
           onPress={handleConnection}
+          disabled={email === "" || password === ""}
         />
       </View>
     </SafeAreaView>

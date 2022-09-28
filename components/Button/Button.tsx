@@ -26,14 +26,19 @@ export const Button = ({
   return (
     <SafeAreaView style={style}>
       <TouchableOpacity
-      activeOpacity={0.7}
+        activeOpacity={0.7}
         onPress={onPress}
         style={[disabled ? styles.disabled : styles[variant]]}
       >
         <Text
           style={[
             disabled
-              ? styles.disabled
+              ? {
+                  color: "#757575",
+                  textAlign: "center",
+                  fontSize: 20,
+                  fontWeight: "600",
+                }
               : variant === "primary"
               ? {
                   color: "white",
@@ -99,5 +104,17 @@ const styles = StyleSheet.create({
   },
   disabled: {
     backgroundColor: "#E5E5E5",
+    borderRadius: 100,
+    lineHeight: 30,
+    letterSpacing: 0.025,
+    justifyContent: "center",
+    height: 60,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    shadowColor: "rgb(16, 24, 40)",
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    shadowOpacity: 0.05,
+    elevation: 1,
   },
 });

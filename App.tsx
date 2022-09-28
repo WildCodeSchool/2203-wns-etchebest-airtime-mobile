@@ -7,7 +7,8 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
-import { ProtectedRoutesScreen } from "./navigation/ProtectedRouteScreen";
+import { SignedInProvider } from "./context/AuthContext";
+import { GlobalStackScreen } from "./navigation/StackScreens";
 
 const httpLink = createHttpLink({
   uri: "http://192.168.1.21:4000/graphql",
@@ -30,7 +31,9 @@ const client = new ApolloClient({
 
 const MyApp = () => {
   return (
-    <ProtectedRoutesScreen />
+    <SignedInProvider>
+      <GlobalStackScreen />
+    </SignedInProvider>
   );
 };
 

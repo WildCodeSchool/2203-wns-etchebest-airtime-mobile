@@ -1,11 +1,15 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { ConnectionScreen } from "../screens/ConnectionScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 import { Pager } from "../screens/Pager";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { ProjectScreen } from "../screens/ProjectScreen";
 import { SubscriptionScreen } from "../screens/SubscriptionScreen";
+import { AuthContextType } from "../types/auth";
 import { stackScreens } from "./navigationType";
 import { TabBarNavigation } from "./TabBarNavigation";
 
@@ -91,7 +95,7 @@ export const HomeStackScreen = (): JSX.Element => {
       <HomeStack.Screen
         name="Home"
         component={HomeScreen}
-        options={headerSimpleArrow}
+        options={headerStyleHidden}
       />
     </HomeStack.Navigator>
   );
@@ -112,5 +116,41 @@ export const ProfileStackScreen = (): JSX.Element => {
     <ProfileStack.Navigator screenOptions={headerStyleWithTitle}>
       <ProfileStack.Screen name="Profile" component={ProfileScreen} />
     </ProfileStack.Navigator>
+  );
+};
+
+export const GlobalStackScreen = (): JSX.Element => {
+  const GlobalStack = createStackNavigator();
+  const { signedIn, setSignedIn } = useContext(AuthContext) as AuthContextType;
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        console.log("🚀 ~ token", token);
+        token ? setSignedIn(true) : setSignedIn(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
+  }, [signedIn]);
+  return (
+    <GlobalStack.Navigator
+      screenOptions={headerStyleHidden}
+      initialRouteName="NotProtectedRoutes"
+    >
+      {signedIn ? (
+        <GlobalStack.Screen
+          name="ProtectedRoutes"
+          component={SignedInStackScreen}
+        />
+      ) : (
+        <GlobalStack.Screen
+          name="NotProtectedRoutes"
+          component={SignedOutStackScreen}
+        />
+      )}
+    </GlobalStack.Navigator>
   );
 };

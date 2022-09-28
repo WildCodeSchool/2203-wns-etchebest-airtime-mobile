@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { FocusAwareStatusBar } from "../navigation/FocusStatusBar";
 
 export const HomeScreen = () => {
+  useEffect(() => {
+    console.log("HomeScreen");
+  }, []);
   return (
     <SafeAreaView style={styles.safeArea}>
       <FocusAwareStatusBar barStyle="light-content" backgroundColor="#000" />
