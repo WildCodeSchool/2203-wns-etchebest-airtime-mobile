@@ -1,14 +1,55 @@
-import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "../components/Button/Button";
+import { AuthContext } from "../context/AuthContext";
+import { SIGNUP } from "../graphql/mutations/userMutation";
 import { FocusAwareStatusBar } from "../navigation/FocusStatusBar";
+import { AuthContextType } from "../types/auth";
 
-export const SubscriptionScreen = () => {
+export const SubscriptionScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [errorMutation, setErrorMutation] = useState("");
+
+  const [signUp, { data: dataSignUp, error: errorSignUp }] = useMutation(
+    SIGNUP,
+    {
+      onError: (): any => setErrorMutation(errorSignUp?.message || ""),
+    }
+  );
+
+  const { setSignedIn } = useContext(AuthContext) as AuthContextType;
+
+  const handleRegister = async () =>
+    signUp({
+      variables: {
+        email: email,
+        password: password,
+        firstname: firstname,
+        lastname: lastname,
+      },
+    });
+
+  useEffect(() => {
+    if (dataSignUp) {
+      const storeData = async (value: string) => {
+        try {
+          const token = JSON.stringify(value);
+          await AsyncStorage.setItem("token", token);
+          setSignedIn(true);
+          navigation.navigate("ProtectedRoutes");
+        } catch (e) {
+          setErrorMutation("La connexion a échoué");
+        }
+      };
+      storeData(dataSignUp?.signUp?.token);
+    }
+  }, [dataSignUp]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <FocusAwareStatusBar barStyle="light-content" backgroundColor="#000" />
@@ -17,7 +58,7 @@ export const SubscriptionScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Prénom"
-          placeholderTextColor="#E2E2E2"
+          placeholderTextColor="#545454"
           onChangeText={setFirstname}
           value={firstname}
           autoFocus
@@ -25,21 +66,21 @@ export const SubscriptionScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Nom"
-          placeholderTextColor="#E2E2E2"
+          placeholderTextColor="#545454"
           onChangeText={setLastname}
           value={lastname}
         />
         <TextInput
           style={styles.input}
           placeholder="Email"
-          placeholderTextColor="#E2E2E2"
+          placeholderTextColor="#545454"
           onChangeText={setEmail}
           value={email}
         />
         <TextInput
           style={styles.input}
           placeholder="Mot de passe"
-          placeholderTextColor="#E2E2E2"
+          placeholderTextColor="#545454"
           onChangeText={setPassword}
           value={password}
           secureTextEntry={true}
@@ -49,7 +90,7 @@ export const SubscriptionScreen = () => {
         title="Valider"
         variant="secondary"
         style={styles.button}
-        onPress={() => {}}
+        onPress={handleRegister}
       />
       <Text style={styles.mentions}>
         En cliquant sur valider j'accepte les conditions générales et la
@@ -66,6 +107,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#F5F5F5",
+    color: "#FFF",
   },
   container: {
     justifyContent: "center",

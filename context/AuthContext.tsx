@@ -1,5 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { AuthContextType } from "../types/auth";
 
 export const AuthContext = createContext<AuthContextType | null>(null);

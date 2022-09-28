@@ -1,14 +1,7 @@
 import { useMutation } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Image, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { Button } from "../components/Button/Button";
 import { AuthContext } from "../context/AuthContext";
 import { LOGIN } from "../graphql/mutations/userMutation";
@@ -54,10 +47,7 @@ export const ConnectionScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFF" />
-      {/* <View style={styles.container}>
-        <Text style={styles.title}>AirTime</Text>
-    </View> */}
-    <Image source={require("../assets/logo-xl.png")} style={styles.image}/>
+      <Image source={require("../assets/logo-xl.png")} style={styles.image} />
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -113,12 +103,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
   },
-    image: {
+  image: {
     width: 200,
     height: 200,
     resizeMode: "contain",
     marginBottom: 16,
     opacity: 0.5,
     alignSelf: "center",
-    },
+  },
 });
