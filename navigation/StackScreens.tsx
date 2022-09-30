@@ -9,6 +9,7 @@ import { Pager } from "../screens/Pager";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { ProjectDetails } from "../screens/ProjectDetails";
 import { ProjectScreen } from "../screens/ProjectScreen";
+import { SettingsScreen } from "../screens/SettingsScreen";
 import { SubscriptionScreen } from "../screens/SubscriptionScreen";
 import { AuthContextType } from "../types/auth";
 import { stackScreens } from "./navigationType";
@@ -135,7 +136,16 @@ export const ProfileStackScreen = (): JSX.Element => {
       screenOptions={headerStyleWithTitle}
       initialRouteName="Profile"
     >
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={headerStyleHidden}
+      />
+      <ProfileStack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ ...headerStyleWithTitle, headerTitle: "Réglages" }}
+      />
     </ProfileStack.Navigator>
   );
 };

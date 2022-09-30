@@ -6,6 +6,7 @@ import { DELETE_TICKET } from "../graphql/mutations/ticketMutation";
 import { GET_PROJECT_BY_ID } from "../graphql/queries/projectQueries";
 import { GET_TICKET_BY_PROJECT_ID } from "../graphql/queries/ticketQueries";
 import { FocusAwareStatusBar } from "../navigation/FocusStatusBar";
+import { ITicket } from "../types/ticket";
 
 export const ProjectDetails = ({ route }: any) => {
   const { project } = route.params;
@@ -35,7 +36,7 @@ export const ProjectDetails = ({ route }: any) => {
       <FocusAwareStatusBar barStyle="light-content" backgroundColor="#000" />
       <ScrollView>
         <Text style={styles.title}>{projectData?.getProjectById?.name}</Text>
-        {data?.getAllTicketsForOneProject?.map((ticket: any) => (
+        {data?.getAllTicketsForOneProject?.map((ticket: ITicket) => (
           <CardTicket
             id={ticket.id}
             key={ticket.id}

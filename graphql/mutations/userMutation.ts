@@ -37,3 +37,31 @@ export const SIGNUP = gql`
     }
   }
 `;
+
+export const UPDATE_USER = gql`
+  mutation updateUser(
+    $updateUserId: String
+    $firstname: String
+    $lastname: String
+    $email: String
+    $password: String
+    $role: String
+  ) {
+    updateUser(
+      id: $updateUserId
+      firstname: $firstname
+      lastname: $lastname
+      email: $email
+      password: $password
+      role: $role
+    ) {
+      id
+      firstname
+      lastname
+      email
+      password
+      role
+      token
+    }
+  }
+`;

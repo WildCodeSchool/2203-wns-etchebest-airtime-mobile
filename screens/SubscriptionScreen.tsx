@@ -36,17 +36,17 @@ export const SubscriptionScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     if (dataSignUp) {
-      const storeData = async (value: string) => {
+      const storeData = async (tokenBdd: string, id: string) => {
         try {
-          const token = JSON.stringify(value);
-          await AsyncStorage.setItem("token", token);
+          await AsyncStorage.setItem("token", tokenBdd);
+          await AsyncStorage.setItem("userId", id);
           setSignedIn(true);
           navigation.navigate("ProtectedRoutes");
         } catch (e) {
           setErrorMutation("La connexion a échoué");
         }
       };
-      storeData(dataSignUp?.signUp?.token);
+      storeData(dataSignUp?.signUp?.token, dataSignUp?.signUp?.id);
     }
   }, [dataSignUp]);
 
@@ -61,7 +61,6 @@ export const SubscriptionScreen = ({ navigation }: any) => {
           placeholderTextColor="#545454"
           onChangeText={setFirstname}
           value={firstname}
-          autoFocus
         />
         <TextInput
           style={styles.input}
@@ -105,6 +104,7 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     marginVertical: 16,
+    marginHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#F5F5F5",
     color: "#FFF",

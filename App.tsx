@@ -12,10 +12,11 @@ import { GlobalStackScreen } from "./navigation/StackScreens";
 
 const httpLink = createHttpLink({
   uri: "http://192.168.1.21:4000/graphql",
+  //uri: "https://staging.etchebest-2-04-22.wilders.dev/graphql",
 });
 
-const authLink = setContext((_, { headers }) => {
-  const token = AsyncStorage.getItem("token");
+const authLink = setContext(async (_, { headers }) => {
+  const token = await AsyncStorage.getItem("token");
   return {
     headers: {
       ...headers,

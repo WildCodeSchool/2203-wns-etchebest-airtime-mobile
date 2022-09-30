@@ -6,8 +6,10 @@ export const DELETE_TICKET = gql`
       id
       title
       comment
-      estimated_time
-      spent_time_minutes
+      estimated_time_unix
+      estimated_time_string
+      creation_date
+      update_date
       status
       user_id
       project_id

@@ -6,8 +6,27 @@ export const GET_TICKET_BY_PROJECT_ID = gql`
       id
       title
       comment
-      estimated_time
-      spent_time_minutes
+      estimated_time_unix
+      estimated_time_string
+      creation_date
+      update_date
+      status
+      user_id
+      project_id
+    }
+  }
+`;
+
+export const GET_ALL_TICKETS = gql`
+  query GetAllTickets {
+    getAllTickets {
+      id
+      title
+      comment
+      estimated_time_unix
+      estimated_time_string
+      creation_date
+      update_date
       status
       user_id
       project_id

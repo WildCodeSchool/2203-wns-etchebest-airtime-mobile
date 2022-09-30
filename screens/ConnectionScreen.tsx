@@ -30,17 +30,17 @@ export const ConnectionScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     if (dataSignIn) {
-      const storeData = async (value: string) => {
+      const storeData = async (tokenBdd: string, id: string) => {
         try {
-          const token = JSON.stringify(value);
-          await AsyncStorage.setItem("token", token);
+          await AsyncStorage.setItem("token", tokenBdd);
+          await AsyncStorage.setItem("userId", id);
           setSignedIn(true);
           navigation.navigate("ProtectedRoutes");
         } catch (e) {
           setErrorMutation("La connexion a échoué");
         }
       };
-      storeData(dataSignIn?.signIn?.token);
+      storeData(dataSignIn?.signIn?.token, dataSignIn?.signIn?.id);
     }
   }, [dataSignIn]);
 
@@ -53,7 +53,6 @@ export const ConnectionScreen = ({ navigation }: any) => {
         placeholder="Email"
         onChangeText={setEmail}
         value={email}
-        autoFocus
       />
       <TextInput
         style={styles.input}
@@ -65,9 +64,9 @@ export const ConnectionScreen = ({ navigation }: any) => {
       <Button
         title="Connexion"
         variant="primary"
+        style={styles.button}
         onPress={handleConnection}
         disabled={email === "" || password === ""}
-        style={styles.button}
       />
       <Button
         title="Annuler"
@@ -88,6 +87,7 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     marginVertical: 16,
+    marginHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#757575",
   },
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
+    marginHorizontal: 16,
   },
   title: {
     fontSize: 32,

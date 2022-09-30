@@ -16,18 +16,20 @@ export const CardProject = ({
 }: CardProjectProps) => {
   return (
     <TouchableOpacity
-      onPress={onPress}
       style={styles.container}
+      onPress={onPress}
       activeOpacity={0.7}
     >
-      <Image
-        source={{ uri: projectImage }}
-        resizeMode="cover"
-        style={styles.image}
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{projectTitle}</Text>
-        <Text style={styles.description}>{projectDescription}</Text>
+      <View style={styles.innerContainer}>
+        <Image
+          source={{ uri: projectImage }}
+          resizeMode="cover"
+          style={styles.image}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{projectTitle}</Text>
+          <Text style={styles.description}>{projectDescription}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -35,17 +37,16 @@ export const CardProject = ({
 
 const styles = StyleSheet.create({
   container: {
+    borderWidth: 1,
+    borderColor: "#E2E2E2",
+    marginVertical: 8,
+    borderRadius: 8,
+    padding: 8,
+  },
+  innerContainer: {
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "#E2E2E2",
-    shadowColor: "rgb(16, 24, 40)",
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 2,
-    shadowOpacity: 0.05,
-    elevation: 2,
-    marginVertical: 8,
   },
   title: {
     fontSize: 20,

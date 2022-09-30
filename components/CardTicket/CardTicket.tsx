@@ -35,13 +35,15 @@ export const CardTicket = ({
           {ticketStatus.toUpperCase()}
         </Text>
       </View>
-      <View
-        style={[
-          styles.cardBody,
-          { backgroundColor: statusColor(ticketStatus) },
-        ]}
-      >
-        <Text style={styles.description}>{ticketDescription}</Text>
+      <View style={styles.cardBody}>
+        <Text
+          style={[
+            styles.description,
+            { backgroundColor: statusColor(ticketStatus) },
+          ]}
+        >
+          {ticketDescription}
+        </Text>
         <TouchableOpacity style={styles.trash} onPress={() => deleteTicket(id)}>
           <Ionicons name="trash-bin-outline" size={24} />
         </TouchableOpacity>
@@ -77,7 +79,6 @@ const styles = StyleSheet.create({
   },
   cardBody: {
     flexDirection: "row",
-    justifyContent: "space-between",
     flex: 1,
   },
   cardTitle: {
@@ -88,6 +89,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "normal",
     overflow: "hidden",
+    flex: 1,
+    borderRadius: 10,
+    padding: 4,
   },
   cardStatus: {
     fontSize: 16,
@@ -96,5 +100,6 @@ const styles = StyleSheet.create({
   },
   trash: {
     alignSelf: "flex-end",
+    marginLeft: 8,
   },
 });

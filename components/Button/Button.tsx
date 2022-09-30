@@ -10,7 +10,7 @@ import {
 
 interface ButtonProps {
   onPress: () => void;
-  title: string;
+  title: string | any;
   variant: "primary" | "secondary" | "ghost";
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
