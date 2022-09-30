@@ -7,6 +7,7 @@ import { ConnectionScreen } from "../screens/ConnectionScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 import { Pager } from "../screens/Pager";
 import { ProfileScreen } from "../screens/ProfileScreen";
+import { ProjectDetails } from "../screens/ProjectDetails";
 import { ProjectScreen } from "../screens/ProjectScreen";
 import { SubscriptionScreen } from "../screens/SubscriptionScreen";
 import { AuthContextType } from "../types/auth";
@@ -40,7 +41,7 @@ export const SignedInStackScreen = (): JSX.Element => {
   return (
     <>
       <SignedInTab.Navigator
-        screenOptions={headerStyleHidden}
+        screenOptions={{ ...headerStyleHidden, unmountOnBlur: true }}
         tabBar={(props) => <TabBarNavigation {...props} />}
         initialRouteName={"HomeStackScreen"}
       >
@@ -98,7 +99,7 @@ export const SignedOutStackScreen = (): JSX.Element => {
 export const HomeStackScreen = (): JSX.Element => {
   const HomeStack = createStackNavigator();
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator initialRouteName="Home">
       <HomeStack.Screen
         name="Home"
         component={HomeScreen}
@@ -111,8 +112,18 @@ export const HomeStackScreen = (): JSX.Element => {
 export const ProjectStackScreen = (): JSX.Element => {
   const ProjectStack = createStackNavigator();
   return (
-    <ProjectStack.Navigator screenOptions={headerStyleHidden}>
+    <ProjectStack.Navigator
+      screenOptions={headerStyleHidden}
+      initialRouteName="Project"
+    >
       <ProjectStack.Screen name="Project" component={ProjectScreen} />
+      <ProjectStack.Screen
+        name="ProjectDetails"
+        component={ProjectDetails}
+        options={{
+          ...headerSimpleArrow,
+        }}
+      />
     </ProjectStack.Navigator>
   );
 };
@@ -120,7 +131,10 @@ export const ProjectStackScreen = (): JSX.Element => {
 export const ProfileStackScreen = (): JSX.Element => {
   const ProfileStack = createStackNavigator();
   return (
-    <ProfileStack.Navigator screenOptions={headerStyleWithTitle}>
+    <ProfileStack.Navigator
+      screenOptions={headerStyleWithTitle}
+      initialRouteName="Profile"
+    >
       <ProfileStack.Screen name="Profile" component={ProfileScreen} />
     </ProfileStack.Navigator>
   );
